@@ -1,0 +1,26 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "cppbuild",
+			"label": "C/C++: gcc.exe 生成活动文件",
+			"command": "C:/Users/Yu/AppData/Local/Programs/MinGW64/x86_64-12.2.0-release-win32-seh-rt_v10-rev0/mingw64/bin/gcc.exe",
+			"args": [
+				"-fdiagnostics-color=always",
+				"-g",
+				"${file}",
+				"-o",
+				"${fileDirname}\\${fileBasenameNoExtension}.exe",
+				""
+			],
+			"options": {
+				"cwd": "C:/Users/Yu/AppData/Local/Programs/MinGW64/x86_64-12.2.0-release-win32-seh-rt_v10-rev0/mingw64/bin"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": "build",
+			"detail": "编译器: C:/Users/Yu/AppData/Local/Programs/MinGW64/x86_64-12.2.0-release-win32-seh-rt_v10-rev0/mingw64/bin/gcc.exe"
+		}
+	]
+}

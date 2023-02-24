@@ -21,7 +21,7 @@
   "C_Cpp_Runner.compilerArgs": [],
   "C_Cpp_Runner.linkerArgs": [],
   "C_Cpp_Runner.includePaths": [
-    "E:\\\\Visual Studio Code\\\\mingw64Location\\\\x86_64-8.1.0-release-win32-seh-rt_v6-rev0\\\\mingw64\\\\include"
+    "C:/Users/Yu/AppData//Local/Programs/MinGW64/x86_64-12.2.0-release-win32-seh-rt_v10-rev0/mingw64/include"
   ],
   "C_Cpp_Runner.includeSearch": [
     "*",
@@ -35,5 +35,9 @@
     "**/.vscode",
     "**/.vscode/**"
   ],
-  "C_Cpp_Runner.useAddressSanitizer": false
+  "C_Cpp_Runner.useAddressSanitizer": false,
+  "files.associations": {
+    "model.h": "c",
+    "card_service.h": "c"
+  }
 }

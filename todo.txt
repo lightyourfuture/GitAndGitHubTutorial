@@ -1,8 +1,52 @@
-MY TO-DO LIST
+PowerShell 7.3.2
+PS D:\WHUTCourses\ComprehensiveExperimentOfProgramDesign\gitproject\GitAndGitHubTutorial> ls
 
-1. Write an article.
-2. Code.
-3. Study books.
-4. Attend classes on time.
-5. Visit aunt.
-6. Apply for remote jobs. 
+    Directory: D:\WHUTCourses\ComprehensiveExperimentOfProgramDesign\gitproject\GitAndGitHubTutorial
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d----           2023/2/23    22:19                .vscode
+-a---           2023/2/23    22:10              0 card_file.c
+-a---           2023/2/23    22:09              0 card_file.h
+-a---           2023/2/23    22:11              0 card_service.c
+-a---           2023/2/23    22:10              0 card_service.h
+-a---           2023/2/23    22:20           1617 main.c
+-a---           2023/2/23    22:23            457 menu.c
+-a---           2023/2/23    22:23             66 menu.h
+-a---           2023/2/23    22:10              0 model.h
+-a---           2023/2/23    20:50            136 todo.txt
+
+PS D:\WHUTCourses\ComprehensiveExperimentOfProgramDesign\gitproject\GitAndGitHubTutorial> gcc -o main main.c menu.c
+PS D:\WHUTCourses\ComprehensiveExperimentOfProgramDesign\gitproject\GitAndGitHubTutorial> ls
+
+    Directory: D:\WHUTCourses\ComprehensiveExperimentOfProgramDesign\gitproject\GitAndGitHubTutorial
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d----           2023/2/23    22:19                .vscode
+-a---           2023/2/23    22:10              0 card_file.c
+-a---           2023/2/23    22:09              0 card_file.h
+-a---           2023/2/23    22:11              0 card_service.c
+-a---           2023/2/23    22:10              0 card_service.h
+-a---           2023/2/23    22:20           1617 main.c
+-a---           2023/2/23    22:35         113194 main.exe
+-a---           2023/2/23    22:23            457 menu.c
+-a---           2023/2/23    22:23             66 menu.h
+-a---           2023/2/23    22:10              0 model.h
+-a---           2023/2/23    20:50            136 todo.txt
+
+PS D:\WHUTCourses\ComprehensiveExperimentOfProgramDesign\gitproject\GitAndGitHubTutorial> ./main.exe
+
+欢迎进入计费管理系统
+
+----------菜单----------
+1.添加卡
+2.查询卡
+3.上机
+4.下机
+5.充值
+6.退费
+7.查询统计
+8.注销卡
+0.退出
+请选择菜单项编号(0~8):

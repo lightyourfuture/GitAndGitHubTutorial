@@ -1,5 +1,9 @@
 #include <stdio.h>
-void outputMenu();
+#include "menu.h"
+#include "model.h"
+#include "card_file.h"
+#include "card_service.h"
+#include "tool.h"
 int main()
 {
     int nSelection = -1; // 输入菜单项编号
@@ -18,12 +22,12 @@ int main()
         {
         case 1: // 添加卡
         {
-            printf("添加卡\n");
+            add();
             break;
         }
         case 2: // 查询卡
         {
-            printf("查询卡\n");
+            query();
             break;
         }
         case 3: // 上机
@@ -71,21 +75,4 @@ int main()
     } while (nSelection != 0);
 
     return 0;
-}
-void outputMenu()
-{
-    // 输出系统菜单
-    printf("----------菜单----------\n");
-    printf("1.添加卡\n");
-    printf("2.查询卡\n");
-    printf("3.上机\n");
-    printf("4.下机\n");
-    printf("5.充值\n");
-    printf("6.退费\n");
-    printf("7.查询统计\n");
-    printf("8.注销卡\n");
-    printf("0.退出\n");
-
-    // 提示选择菜单编号
-    printf("请选择菜单项编号(0~8):\n");
 }
