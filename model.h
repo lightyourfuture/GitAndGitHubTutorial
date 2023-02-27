@@ -1,3 +1,5 @@
+#ifndef __MODEL_H__
+#define __MODEL_H__
 #include <time.h>
 typedef struct Card
 {
@@ -12,3 +14,10 @@ typedef struct Card
     float fBalance;   // 余额
     int nDel;         // 删除表示(0-未删除,1-删除)
 } Card;
+typedef struct CardNode
+{
+    Card data;
+    struct CardNode *next;
+} CardNode, *lpCardNode;
+
+#endif

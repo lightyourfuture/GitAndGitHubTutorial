@@ -4,4 +4,5 @@ void outputMenu();
 void add();
 int getSize(const char *pInfo);
 void query();
+void exitApp();
 #endif

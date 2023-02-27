@@ -86,23 +86,51 @@ void query()
     char aName[18] = {0};
     char aTime[20] = {0};
     Card *pCard = NULL;
-    printf("请输入查询的卡号:\n");
-    scanf("%s", aName);
-    pCard = queryCard(aName);
+    int nIndex = 0;
 
-    // 将时间转换为字符串
-    timeToString(pCard->tLastTime, aTime);
-    printf("查询到的卡信息如下:\n");
-    printf("卡号:\n");
-    printf("%s\n", pCard->aName);
-    printf("状态:\n");
-    printf("%d\n", pCard->nStatus);
-    printf("余额:\n");
-    printf("%0.1f\n", pCard->fBalance);
-    printf("累计使用:\n");
-    printf("%0.1f\n", pCard->fTotalUse);
-    printf("使用次数:\n");
-    printf("%d\n", pCard->nUseCount);
-    printf("上次使用时间\n");
-    printf("%s\n", aTime);
+    printf("----------查询卡----------\n");
+
+    // 提示并接收输入的卡信息
+    printf("请输入查询的卡号:(长度为1~18)\n");
+    scanf("%s", aName);
+
+    // 查询卡
+    pCard = queryCards(aName, &nIndex);
+
+    // 如果pCard==NULLb,表示没有该卡的信息
+
+    if (pCard == NULL || nIndex == 0)
+    {
+        printf("没有该卡的信息!\n");
+    }
+    else
+    {
+        printf("查询到的卡信息如下:\n");
+        int count = 0; // 这里为了好看增加了这个
+        for (int i = 0; i < nIndex; i++)
+        {
+            // 输出表格
+            //  将时间转换为字符串
+            count = count + 1;
+            timeToString(pCard[i].tLastTime, aTime);
+            printf("----------查到的第%d张卡----------\n", count);
+            printf("卡号:\n");
+            printf("%s\n", pCard[i].aName);
+            printf("状态:\n");
+            printf("%d\n", pCard[i].nStatus);
+            printf("余额:\n");
+            printf("%0.1f\n", pCard[i].fBalance);
+            printf("累计使用:\n");
+            printf("%0.1f\n", pCard[i].fTotalUse);
+            printf("使用次数:\n");
+            printf("%d\n", pCard[i].nUseCount);
+            printf("上次使用时间\n");
+            printf("%s\n", aTime);
+            printf("---------------------------------\n");
+        }
+    }
+}
+void exitApp()
+{
+    releaseCardList();
 }

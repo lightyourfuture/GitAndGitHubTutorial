@@ -62,7 +62,7 @@ int main()
         }
         case 0: // 退出
         {
-            printf("退出\n");
+            exitApp();
             break;
         }
         default:
