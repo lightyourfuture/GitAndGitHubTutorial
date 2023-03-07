@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include <time.h>
 #include "model.h"
 #include "card_service.h"
@@ -106,14 +107,12 @@ void query()
     else
     {
         printf("查询到的卡信息如下:\n");
-        int count = 0; // 这里为了好看增加了这个
         for (int i = 0; i < nIndex; i++)
         {
             // 输出表格
             //  将时间转换为字符串
-            count = count + 1;
             timeToString(pCard[i].tLastTime, aTime);
-            printf("----------查到的第%d张卡----------\n", count);
+            printf("----------查到的第%d张卡----------\n", i);
             printf("卡号:\n");
             printf("%s\n", pCard[i].aName);
             printf("状态:\n");
@@ -128,6 +127,8 @@ void query()
             printf("%s\n", aTime);
             printf("---------------------------------\n");
         }
+        free(pCard);
+        pCard = NULL;
     }
 }
 void exitApp()

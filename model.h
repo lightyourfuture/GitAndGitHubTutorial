@@ -12,7 +12,7 @@ typedef struct Card
     time_t tLastTime; // 最后使用时间
     int nUseCount;    // 使用次数
     float fBalance;   // 余额
-    int nDel;         // 删除表示(0-未删除,1-删除)
+    int nDel;         // 删除标识(0-未删除,1-删除)
 } Card;
 typedef struct CardNode
 {

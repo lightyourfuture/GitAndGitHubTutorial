@@ -3,9 +3,10 @@
 #include <stdlib.h>
 #include "model.h"
 #include "global.h"
+#include "card_file.h"
 Card aCard[50]; // 卡信息结构体数组
 int nCount = 0; // 卡信息实际个数
-
+int getCard();
 lpCardNode cardList = NULL;
 
 // 初始化链表
@@ -23,47 +24,33 @@ int initCardList()
 }
 int addCard(Card card)
 {
-    lpCardNode cur = NULL;
-    if (cardList == NULL)
-    {
-        initCardList();
-    }
-    // 将数据保存到结点中
-    cur = (lpCardNode)malloc(sizeof(CardNode));
-    if (cur != NULL)
-    {
-        // 将卡信息添加到当前结点
-        cur->data = card;
-        cur->next = NULL;
-        // 找到链表的结尾
-        //  遍历链表找到最后一个结点
-        lpCardNode node = cardList;
-        while (node->next != NULL)
-        {
-            node = node->next;
-        }
-        // 将添加的结点,添加到链表尾部
-        node->next = cur;
-        return TRUE;
-    }
-    return FALSE;
+    // 将卡信息保存到文件中
+    return saveCard(&card, CARDPATH);
+    // if (saveCard(&card, CARDPATH) == NULL) // comparison between pointer and integer,反正估计也不会再没有的情况下度,不管了
+    // {
+    //     return 0;
+    // }
 }
-
 Card *queryCard(const char *pName)
 {
-    lpCardNode cur = NULL;
-    if (cardList != NULL)
+    lpCardNode node = NULL;
+    getCard();
+    // if (getCard() == 0) // comparison between pointer and integer,,FALSE改成0不起作用,忽略吧
+    // {
+    //     return FALSE;
+    // }
+    // 从链表的头结点指向下一个结点开始遍历
+
+    node = cardList->next;
+    while (node != NULL)
     {
-        cur = cardList->next;
-        while (cur != NULL)
+        if (strcmp(node->data.aName, pName) == 0)
         {
-            if (strcmp(cur->data.aName, pName) == 0)
-            {
-                return &cur->data;
-            }
-            cur = cur->next;
+            return &node->data;
         }
+        node = node->next;
     }
+
     return NULL;
 }
 
@@ -96,30 +83,96 @@ void releaseCardList()
 Card *queryCards(const char *pName, int *pIndex)
 {
     lpCardNode cur = NULL;
-    // 如果链表为空,查询失败,返回NULL
+    Card *pCard = NULL;
+    getCard();
+    // if(getCard()==FALSE)
+    // {
+    //     return FALSE;
+    // }
     // 首先分配一个Card大小内存空间
-    Card *pCard = (Card *)malloc(sizeof(Card));
-    // 从链表的头结点指向的下一个结点开始遍历
-
+    pCard = (Card *)malloc(sizeof(Card));
     if (pCard == NULL)
     {
         return NULL;
     }
+    // 如果链表为空,查询失败,返回NULL
+    // 从链表的头结点指向的下一个结点开始遍历
+    cur = cardList->next;
+    //遍历链表,结点为空表示到达链表尾部
+    while (cur != NULL)
+    {
+        //判断在遍历到的结点的学号中,查找时候包含pName字符串
+        if (strstr(cur->data.aName, pName) != NULL)
+        {
+            //如果有,则保存结点中的数据
+            pCard[*pIndex] = cur->data;
+            (*pIndex)++;
+            //重新为指针分配内存
+            // void *realloc(void *ptr, size_t size)
+            pCard = (Card *)realloc(pCard, ((long long unsigned int)(*pIndex) + 1) * sizeof(Card)); // warning: conversion to 'long long unsigned int' from 'int' may change the sign of the result [-Wsign-conversion]
+        }
+        cur = cur->next;
+    }
 
+    return pCard;
+}
+
+int getCard()
+{
+    // 调用getCardCount(),获取文件中卡信息数量
+    int count = 0; // 这里使用nCount会和本文件最上边的全局变量名字重复
+    Card *pCard = NULL;
+    int i = 0;
+    lpCardNode node = NULL;
+    lpCardNode cur = NULL;
     if (cardList != NULL)
     {
-        cur = cardList->next;
-        while (cur != NULL)
-        {
-            if (strstr(cur->data.aName, pName) != NULL)
-            {
-                pCard[*pIndex] = cur->data;
-                (*pIndex)++;
-                // void *realloc(void *ptr, size_t size)
-                pCard = (Card *)realloc(pCard, ((long long unsigned int)(*pIndex) + 1) * sizeof(Card)); // warning: conversion to 'long long unsigned int' from 'int' may change the sign of the result [-Wsign-conversion]
-            }
-            cur = cur->next;
-        }
+        releaseCardList();
     }
-    return pCard;
+    initCardList();
+    // 获取卡信息数量
+    count = getCardCount(CARDPATH);
+    nCount = count;
+    // 动态分配内存
+    pCard = (Card *)malloc(sizeof(Card) * (long long unsigned int)count); // conversion to 'long long unsigned int' from 'int' may change the sign of the result [-Wsign-conversion]gcc
+    if (pCard == NULL)
+    {
+        return FALSE;
+    }
+    // 获取卡信息
+    // 调用readCard(),从文件中读取卡信息
+    // 将卡信息保存到card_service.c文件中的全局变量cardList链表中,链表中的每一个节点保存一条卡信息
+    // 注意：为保证查询卡时,文件中的数据与链表中的数据相同。所以当查询卡时,不管链表cardList中有无数据,都会先清空链表中的数据,然后从card.txt文件中读取所有的卡信息,保存到链表中。
+    if (readCard(pCard, CARDPATH) == FALSE)
+    {
+        free(pCard);
+        pCard = NULL;
+        return FALSE;
+    }
+    for (i = 0, node = cardList; i < count; i++)
+    {
+        // 为结点分配内存
+        cur = (lpCardNode)malloc(sizeof(CardNode));
+
+        // 如果内存分配失败,则返回
+        if (cur == NULL)
+        {
+            free(pCard);
+            return FALSE;
+        }
+        // 初始化新的空间,全部赋值为0;
+        memset(cur, 0, sizeof(CardNode));
+
+        // 将卡信息保存到结点中
+        cur->data = pCard[i];
+        cur->next = NULL;
+
+        // 将结点添加到链表尾部
+        node->next = cur;
+        node = cur;
+    }
+    free(pCard);
+    pCard = NULL;
+
+    return TRUE;
 }
